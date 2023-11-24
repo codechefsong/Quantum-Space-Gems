@@ -1,5 +1,8 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import { useWalletClient } from "wagmi";
+import { useScaffoldContract } from "~~/hooks/scaffold-eth";
+import { notification } from "~~/utils/scaffold-eth";
 
 type CellInfo = {
   id: string;
@@ -9,8 +12,18 @@ type CellInfo = {
 };
 
 export const Cell = ({ id, content, type, index }: CellInfo) => {
+  const { data: walletClient } = useWalletClient();
+  const { data: spaceETHContract } = useScaffoldContract({
+    contractName: "SpaceETH",
+    walletClient,
+  });
+
   const handleDrop = async (item: any, index: number) => {
     console.log(item, index);
+    if (item.index === 26) {
+      await spaceETHContract?.write.placeSpaceShip([BigInt(index)]);
+      notification.success("It was success");
+    }
   };
 
   const [{ isDragging }, drag] = useDrag(() => ({

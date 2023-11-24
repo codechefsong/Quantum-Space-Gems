@@ -39,6 +39,12 @@ contract SpaceETH {
         return nums;
     }
 
+    function placeSpaceShip(uint256 index) public {
+        grid[index].content = "0";
+
+        nums.push(index);
+    }
+
     function withdraw() isOwner public {
         (bool success,) = owner.call{value: address(this).balance}("");
         require(success, "Failed to send Ether");

@@ -31,6 +31,7 @@ const Board: NextPage = () => {
                     />
                   ))}
               </div>
+              <Cell id="26" content="Your Ship" type="" index={26} />
             </div>
           </div>
         </DndProvider>
