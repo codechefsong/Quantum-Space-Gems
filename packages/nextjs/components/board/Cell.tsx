@@ -4,19 +4,13 @@ import { useDrag, useDrop } from "react-dnd";
 type CellInfo = {
   id: string;
   content: string;
-  type: number;
+  type: string;
   index: number;
-  gridData: any;
-  setGridData: any;
 };
 
-export const Cell = ({ id, content, type, index, gridData, setGridData }: CellInfo) => {
+export const Cell = ({ id, content, type, index }: CellInfo) => {
   const handleDrop = async (item: any, index: number) => {
-    const newGrid = [...gridData];
-    const oldContent = gridData[index].content;
-    newGrid[index].content = item.content;
-    newGrid[item.index].content = oldContent;
-    setGridData(newGrid);
+    console.log(item, index);
   };
 
   const [{ isDragging }, drag] = useDrag(() => ({

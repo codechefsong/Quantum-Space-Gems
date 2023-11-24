@@ -1,27 +1,15 @@
-import { useState } from "react";
 import { Cell } from "../components/board/Cell";
 import type { NextPage } from "next";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { MetaHeader } from "~~/components/MetaHeader";
-
-const generateGridData = () => {
-  const data = [];
-  for (let row = 0; row < 5; row++) {
-    for (let col = 0; col < 5; col++) {
-      data.push({
-        id: `cell-${row}-${col}`,
-        index: data.length,
-        content: data.length + 1,
-        typeGrid: 0,
-      });
-    }
-  }
-  return data;
-};
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 const Board: NextPage = () => {
-  const [gridData, setGridData] = useState(generateGridData());
+  const { data: gridData } = useScaffoldContractRead({
+    contractName: "SpaceETH",
+    functionName: "getGrid",
+  });
 
   return (
     <>
@@ -40,8 +28,6 @@ const Board: NextPage = () => {
                       content={item.content.toString()}
                       type={item.typeGrid}
                       index={index}
-                      gridData={gridData}
-                      setGridData={setGridData}
                     />
                   ))}
               </div>
