@@ -2,10 +2,18 @@ import { Cell } from "../components/board/Cell";
 import type { NextPage } from "next";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useWalletClient } from "wagmi";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { useScaffoldContract } from "~~/hooks/scaffold-eth";
 
 const Board: NextPage = () => {
+  const { data: walletClient } = useWalletClient();
+  const { data: spaceETHContract } = useScaffoldContract({
+    contractName: "SpaceETH",
+    walletClient,
+  });
+
   const { data: gridData } = useScaffoldContractRead({
     contractName: "SpaceETH",
     functionName: "getGrid",
@@ -28,10 +36,11 @@ const Board: NextPage = () => {
                       content={item.content.toString()}
                       type={item.typeGrid}
                       index={index}
+                      spaceETHContract={spaceETHContract}
                     />
                   ))}
               </div>
-              <Cell id="26" content="Your Ship" type="" index={26} />
+              <Cell id="26" content="Your Ship" type="" index={26} spaceETHContract={spaceETHContract} />
             </div>
           </div>
         </DndProvider>
