@@ -12,7 +12,7 @@ type CellInfo = {
 
 export const Cell = ({ id, content, type, index, spaceETHContract }: CellInfo) => {
   const canMove = () => {
-    if (index % 2 !== 0) return true;
+    if (content === "-") return true;
     return false;
   };
 

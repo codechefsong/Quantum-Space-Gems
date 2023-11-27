@@ -40,7 +40,9 @@ const Board: NextPage = () => {
                     />
                   ))}
               </div>
-              <Cell id="26" content="Your Ship" type="" index={26} spaceETHContract={spaceETHContract} />
+              <div className="mt-[10px]">
+                <Cell id="26" content="Your Ship" type="" index={26} spaceETHContract={spaceETHContract} />
+              </div>
             </div>
           </div>
         </DndProvider>
