@@ -8,16 +8,20 @@ type CellInfo = {
   type: string;
   index: number;
   spaceETHContract: any;
+  up: string;
+  down: string;
+  left: string;
+  right: string;
 };
 
-export const Cell = ({ id, content, type, index, spaceETHContract }: CellInfo) => {
-  const canMove = () => {
-    if (content === "-") return true;
+export const Cell = ({ id, content, type, index, spaceETHContract, up, down, left, right }: CellInfo) => {
+  const canMove = (item: any) => {
+    if (item.id === "26") return true;
+    if (item.id === up || item.id === down || item.id === left || item.id === right) return true;
     return false;
   };
 
   const handleDrop = async (item: any, index: number) => {
-    console.log(item, index);
     if (item.index === 26) {
       await spaceETHContract?.write.placeSpaceShip([BigInt(index)]);
       notification.success("It was success");
@@ -35,7 +39,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract }: CellInfo) =
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: "CELL",
     drop: item => handleDrop(item, index),
-    canDrop: () => canMove(),
+    canDrop: item => canMove(item),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
@@ -55,7 +59,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract }: CellInfo) =
         cursor: "move",
       }}
     >
-      {content}
+      {index}
       {isOver && canDrop && (
         <div
           className="overlay"

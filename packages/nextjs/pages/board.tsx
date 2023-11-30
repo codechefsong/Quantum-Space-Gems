@@ -37,11 +37,25 @@ const Board: NextPage = () => {
                       type={item.typeGrid}
                       index={index}
                       spaceETHContract={spaceETHContract}
+                      up={item.up.toString()}
+                      down={item.down.toString()}
+                      left={item.left.toString()}
+                      right={item.right.toString()}
                     />
                   ))}
               </div>
               <div className="mt-[10px]">
-                <Cell id="26" content="Your Ship" type="" index={26} spaceETHContract={spaceETHContract} />
+                <Cell
+                  id="26"
+                  content="Your Ship"
+                  type=""
+                  index={26}
+                  spaceETHContract={spaceETHContract}
+                  up="0"
+                  down="0"
+                  left="0"
+                  right="0"
+                />
               </div>
             </div>
           </div>
