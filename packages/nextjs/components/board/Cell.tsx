@@ -16,12 +16,14 @@ type CellInfo = {
 
 export const Cell = ({ id, content, type, index, spaceETHContract, up, down, left, right }: CellInfo) => {
   const canMove = (item: any) => {
+    console.log(item, index, up, down, left, right);
     if (item.id === "26") return true;
-    if (item.id === up || item.id === down || item.id === left || item.id === right) return true;
+    if (item.up === id || item.down === id || item.left === id || item.right === id) return true;
     return false;
   };
 
   const handleDrop = async (item: any, index: number) => {
+    console.log(item, index);
     if (item.index === 26) {
       await spaceETHContract?.write.placeSpaceShip([BigInt(index)]);
       notification.success("It was success");
@@ -30,7 +32,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "CELL",
-    item: { id, index, type, content },
+    item: { id, index, type, content, up, down, left, right },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),

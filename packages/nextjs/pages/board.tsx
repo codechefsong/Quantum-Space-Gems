@@ -27,7 +27,7 @@ const Board: NextPage = () => {
           <div className="flex">
             <div>
               <h2 className="mt-4 text-3xl">Ground</h2>
-              <div className="flex flex-wrap" style={{ width: "350px" }}>
+              <div className="flex flex-wrap" style={{ width: "400px" }}>
                 {gridData &&
                   gridData.map((item, index) => (
                     <Cell
