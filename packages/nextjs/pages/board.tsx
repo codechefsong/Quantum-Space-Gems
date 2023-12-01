@@ -49,7 +49,7 @@ const Board: NextPage = () => {
                   id="26"
                   content="Your Ship"
                   type=""
-                  index={26}
+                  index={99}
                   spaceETHContract={spaceETHContract}
                   up="0"
                   down="0"

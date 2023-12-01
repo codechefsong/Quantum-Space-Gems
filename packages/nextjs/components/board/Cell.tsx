@@ -17,14 +17,14 @@ type CellInfo = {
 export const Cell = ({ id, content, type, index, spaceETHContract, up, down, left, right }: CellInfo) => {
   const canMove = (item: any) => {
     console.log(item, index, up, down, left, right);
-    if (item.id === "26") return true;
+    if (index === 99) return true;
     if (item.up === id || item.down === id || item.left === id || item.right === id) return true;
     return false;
   };
 
   const handleDrop = async (item: any, index: number) => {
     console.log(item, index);
-    if (item.index === 26) {
+    if (item.index === 99) {
       await spaceETHContract?.write.placeSpaceShip([BigInt(index)]);
       notification.success("It was success");
     }
@@ -61,7 +61,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
         cursor: "move",
       }}
     >
-      {index}
+      {content}
       {isOver && canDrop && (
         <div
           className="overlay"
