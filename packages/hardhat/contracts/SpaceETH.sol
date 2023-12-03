@@ -75,6 +75,17 @@ contract SpaceETH {
         nums.push(index);
     }
 
+    function movePlayer(uint256 oldIndex, uint256 newIndex) public {
+        Box memory data1 = grid[oldIndex];
+        Box memory data2 = grid[newIndex];
+        grid[oldIndex] = data2;
+        grid[newIndex] = data1;
+        grid[oldIndex].index = data1.index;
+        grid[oldIndex].id = data1.id;
+        grid[newIndex].index = data2.index;
+        grid[newIndex].id = data2.id;
+    }
+
     function withdraw() isOwner public {
         (bool success,) = owner.call{value: address(this).balance}("");
         require(success, "Failed to send Ether");

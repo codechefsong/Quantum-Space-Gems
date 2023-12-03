@@ -27,6 +27,9 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
     if (item.index === 99) {
       await spaceETHContract?.write.placeSpaceShip([BigInt(index)]);
       notification.success("It was success");
+    } else {
+      await spaceETHContract?.write.movePlayer([item.id, index]);
+      notification.success("Moving Player");
     }
   };
 
