@@ -5,6 +5,7 @@ contract SpaceETH {
     address public immutable owner;
     Box[] public grid;
     uint256[] public nums;
+    mapping(uint256 => GemField) public gemFields;
 
     struct Box {
         uint256 index;
@@ -15,6 +16,14 @@ contract SpaceETH {
         uint256 down;
         uint256 left;
         uint256 right;
+    }
+
+    struct GemField {
+        uint256 index;
+        uint256 position;
+        uint256 hp;
+        address owner;
+        uint256 startdate;
     }
 
     constructor(address _owner) {
@@ -54,6 +63,8 @@ contract SpaceETH {
         grid.push(Box(27, 27, "base", "-", 21, 999, 26, 28));
         grid.push(Box(28, 28, "base", "-", 22, 999, 27, 29));
         grid.push(Box(29, 29, "base", "-", 23, 999, 28, 999));
+
+        gemFields[1] = GemField(0, 1, 3, address(0), 0);
     }
 
     modifier isOwner() {
@@ -84,6 +95,17 @@ contract SpaceETH {
         grid[oldIndex].id = data1.id;
         grid[newIndex].index = data2.index;
         grid[newIndex].id = data2.id;
+    }
+
+    function capture(uint256 id) public {
+        GemField storage gem = gemFields[id];
+        gem.hp -= 3;
+
+        if (gem.hp == 0) {
+            gem.owner = msg.sender;
+            gem.startdate = block.timestamp;
+            gem.hp += 3;
+        }
     }
 
     function withdraw() isOwner public {

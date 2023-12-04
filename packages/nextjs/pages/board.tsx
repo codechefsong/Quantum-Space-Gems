@@ -46,7 +46,7 @@ const Board: NextPage = () => {
               </div>
               <div className="mt-[10px]">
                 <Cell
-                  id="26"
+                  id="99"
                   content="Your Ship"
                   type=""
                   index={99}

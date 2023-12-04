@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import CaptureMenu from "./CaptureMenu";
 import { useDrag, useDrop } from "react-dnd";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -15,6 +16,12 @@ type CellInfo = {
 };
 
 export const Cell = ({ id, content, type, index, spaceETHContract, up, down, left, right }: CellInfo) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleToggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   const canMove = (item: any) => {
     console.log(item, index, up, down, left, right);
     if (index === 99) return true;
@@ -60,9 +67,10 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
       className="w-16 h-16 border border-gray-300 flex items-center justify-center font-bold relative"
       style={{
         opacity: isDragging ? 0.5 : 1,
-        background: "white",
+        background: index === 1 ? "green" : "white",
         cursor: "move",
       }}
+      onClick={handleToggleDropdown}
     >
       {content}
       {isOver && canDrop && (
@@ -113,6 +121,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
           }}
         />
       )}
+      <CaptureMenu index={index} isOpen={isDropdownOpen} onClose={() => setIsDropdownOpen(false)} />
     </div>
   );
 };
