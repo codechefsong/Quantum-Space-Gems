@@ -19,7 +19,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleToggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    if (index === 1) setIsDropdownOpen(!isDropdownOpen);
   };
 
   const canMove = (item: any) => {
@@ -121,7 +121,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
           }}
         />
       )}
-      <CaptureMenu index={index} isOpen={isDropdownOpen} onClose={() => setIsDropdownOpen(false)} />
+      {index === 1 && <CaptureMenu index={index} isOpen={isDropdownOpen} onClose={() => setIsDropdownOpen(false)} />}
     </div>
   );
 };

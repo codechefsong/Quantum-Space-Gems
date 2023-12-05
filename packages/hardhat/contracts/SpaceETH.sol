@@ -85,6 +85,10 @@ contract SpaceETH {
         return nums;
     }
 
+    function getGemFieldByID(uint256 index) public view returns (GemField memory){
+        return gemFields[index];
+    }
+
     function placeSpaceShip(uint256 index) public {
         grid[index].content = "0";
 
@@ -111,6 +115,16 @@ contract SpaceETH {
             gem.startdate = block.timestamp;
             gem.hp += 3;
         }
+    }
+
+
+    function mineGem(uint256 id) public {
+        GemField storage gem = gemFields[id];
+        require(gem.owner == msg.sender, "You do not own this gem fields");
+
+        uint256 amount = block.timestamp - gem.startdate;
+        gemToken.mint(msg.sender, 1 * amount);
+        gem.startdate = block.timestamp;
     }
 
     function withdraw() isOwner public {
