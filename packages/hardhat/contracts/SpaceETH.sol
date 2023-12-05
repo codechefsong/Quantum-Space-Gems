@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
+import "./GemToken.sol";
+
 contract SpaceETH {
+    GemToken public gemToken;
+
     address public immutable owner;
     Box[] public grid;
     uint256[] public nums;
@@ -26,8 +30,9 @@ contract SpaceETH {
         uint256 startdate;
     }
 
-    constructor(address _owner) {
+    constructor(address _owner, address _tokenAddress) {
         owner = _owner;
+        gemToken = GemToken(_tokenAddress);
 
         grid.push(Box(0, 0, "base", "-", 999, 6, 999, 1));
         grid.push(Box(1, 1, "base", "-", 999, 7, 0, 2));
