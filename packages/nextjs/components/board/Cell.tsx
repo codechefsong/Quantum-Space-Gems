@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import Image from "next/image";
 import CaptureMenu from "./CaptureMenu";
 import { useDrag, useDrop } from "react-dnd";
 import { notification } from "~~/utils/scaffold-eth";
@@ -72,7 +73,8 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
       }}
       onClick={handleToggleDropdown}
     >
-      {content}
+      {content !== "0" && <p>{content}</p>}
+      {content === "0" && <Image alt="Game" width={500} height={350} src="/spacetroop.png" />}
       {isOver && canDrop && (
         <div
           className="overlay"
