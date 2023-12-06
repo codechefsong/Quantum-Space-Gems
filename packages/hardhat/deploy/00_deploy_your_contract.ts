@@ -29,6 +29,12 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   const gemContract = await hre.ethers.getContract("GemToken", deployer);
 
+  await deploy("TroopNFT", {
+    from: deployer,
+    log: true,
+    autoMine: true,
+  });
+
   await deploy("SpaceETH", {
     from: deployer,
     // Contract constructor arguments
