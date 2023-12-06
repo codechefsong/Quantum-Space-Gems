@@ -74,7 +74,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
       onClick={handleToggleDropdown}
     >
       {content !== "0" && <p>{content}</p>}
-      {content === "0" && <Image alt="Game" width={500} height={350} src="/spacetroop.png" />}
+      {content === "0" && <Image alt="Troop" width={500} height={350} src="/spacetroop.png" />}
       {isOver && canDrop && (
         <div
           className="overlay"
