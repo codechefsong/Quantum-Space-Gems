@@ -12,6 +12,15 @@ contract TroopNFT is ERC721URIStorage {
 
   constructor() ERC721("Troop NFT", "TRP") {}
 
+  mapping(address => Troop) public userTroops;
+
+  struct Troop {
+    uint256 index;
+    uint256 id;
+    uint256 hp;
+    string url;
+  }
+
   function mint(address _to, string memory _tokenURI_) public returns (uint256) {
     uint256 newItemId = _tokenIds.current();
     _mint(_to, newItemId);
