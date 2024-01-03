@@ -12,13 +12,13 @@ contract TroopNFT is ERC721URIStorage {
 
   constructor() ERC721("Troop NFT", "TRP") {}
 
-  mapping(address => Troop) public userTroops;
+  mapping(address => Troop[]) public userTroops;
 
   struct Troop {
-    uint256 index;
     uint256 id;
     uint256 hp;
     string url;
+    bool isDeployed;
   }
 
   function mint(address _to, string memory _tokenURI_) public returns (uint256) {
@@ -26,12 +26,13 @@ contract TroopNFT is ERC721URIStorage {
     _mint(_to, newItemId);
     _setTokenURI(newItemId, _tokenURI_);
     mynfts[_to].push(newItemId);
+    userTroops[msg.sender].push(Troop(newItemId, 3, "/spacetroop.png", false));
 
     _tokenIds.increment();
     return newItemId;
   }
 
-  function getMyNFTs(address _owner) public view returns (uint256[] memory){
-    return mynfts[_owner];
+  function getMyNFTs(address _owner) public view returns (Troop[] memory){
+    return userTroops[_owner];
   }
 }

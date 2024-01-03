@@ -35,11 +35,12 @@ const Marketplace: NextPage = () => {
           {nfts?.map((n, index) => (
             <div
               key={index}
-              className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
+              className="w-16 h-20 border border-gray-30 font-bold mr-2 mb-2 cursor-pointer"
               style={{ background: selectedNFT === index ? "#00cc99" : "white" }}
               onClick={() => setSelectNFT(index)}
             >
-              {n.toString()}
+              <Image alt="Troop" width={100} height={100} src={n.url} />
+              <p className="m-0">HP {n.hp.toString()}</p>
             </div>
           ))}
         </div>
