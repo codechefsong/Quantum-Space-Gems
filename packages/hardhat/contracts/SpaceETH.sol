@@ -103,12 +103,8 @@ contract SpaceETH {
     function movePlayer(uint256 oldIndex, uint256 newIndex) public {
         Box memory data1 = grid[oldIndex];
         Box memory data2 = grid[newIndex];
-        grid[oldIndex] = data2;
-        grid[newIndex] = data1;
-        grid[oldIndex].index = data1.index;
-        grid[oldIndex].id = data1.id;
-        grid[newIndex].index = data2.index;
-        grid[newIndex].id = data2.id;
+        grid[oldIndex].content = data2.content;
+        grid[newIndex].content = data1.content;
     }
 
     function capture(uint256 id) public {
