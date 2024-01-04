@@ -35,4 +35,29 @@ contract TroopNFT is ERC721URIStorage {
   function getMyNFTs(address _owner) public view returns (Troop[] memory){
     return userTroops[_owner];
   }
+
+  function getNonDeployTroops(address _owner) public view returns (Troop[] memory){
+    uint troopsCount = 0;
+    uint troopsId = 0;
+   
+    for (uint i = 0; i < userTroops[_owner].length; i++) {
+      if (userTroops[_owner][i].isDeployed == false) {
+        troopsCount += 1;
+      }
+    }
+
+    Troop[] memory nonDeployTroops = new Troop[](troopsCount);
+
+    for (uint i = 0; i < userTroops[_owner].length; i++) {
+      if (userTroops[_owner][i].isDeployed == false) {
+        nonDeployTroops[troopsId] = userTroops[_owner][i];
+      }
+    }
+
+    return nonDeployTroops;
+  }
+
+  function setTroopDeployed(uint256 id) public {
+    userTroops[msg.sender][id].isDeployed = true;
+  }
 }

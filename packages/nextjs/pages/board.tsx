@@ -2,12 +2,13 @@ import { Cell } from "../components/board/Cell";
 import type { NextPage } from "next";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useWalletClient } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { useScaffoldContract } from "~~/hooks/scaffold-eth";
 
 const Board: NextPage = () => {
+  const { address } = useAccount();
   const { data: walletClient } = useWalletClient();
   const { data: spaceETHContract } = useScaffoldContract({
     contractName: "SpaceETH",
@@ -17,6 +18,12 @@ const Board: NextPage = () => {
   const { data: gridData } = useScaffoldContractRead({
     contractName: "SpaceETH",
     functionName: "getGrid",
+  });
+
+  const { data: nfts } = useScaffoldContractRead({
+    contractName: "TroopNFT",
+    functionName: "getNonDeployTroops",
+    args: [address],
   });
 
   return (
@@ -36,6 +43,7 @@ const Board: NextPage = () => {
                       content={item.content.toString()}
                       type={item.typeGrid}
                       index={index}
+                      data={null}
                       spaceETHContract={spaceETHContract}
                       up={item.up.toString()}
                       down={item.down.toString()}
@@ -44,18 +52,22 @@ const Board: NextPage = () => {
                     />
                   ))}
               </div>
-              <div className="mt-[10px]">
-                <Cell
-                  id="99"
-                  content="Your Ship"
-                  type=""
-                  index={99}
-                  spaceETHContract={spaceETHContract}
-                  up="0"
-                  down="0"
-                  left="0"
-                  right="0"
-                />
+              <div className="flex mt-[10px]">
+                {nfts?.map((n, index) => (
+                  <Cell
+                    key={index}
+                    id="99"
+                    content="Your Ship"
+                    type=""
+                    index={99 + index}
+                    data={n}
+                    spaceETHContract={spaceETHContract}
+                    up="0"
+                    down="0"
+                    left="0"
+                    right="0"
+                  />
+                ))}
               </div>
             </div>
           </div>

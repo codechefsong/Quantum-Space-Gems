@@ -10,13 +10,14 @@ type CellInfo = {
   type: string;
   index: number;
   spaceETHContract: any;
+  data: any;
   up: string;
   down: string;
   left: string;
   right: string;
 };
 
-export const Cell = ({ id, content, type, index, spaceETHContract, up, down, left, right }: CellInfo) => {
+export const Cell = ({ id, content, type, index, spaceETHContract, data, up, down, left, right }: CellInfo) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleToggleDropdown = () => {
@@ -74,7 +75,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, up, down, lef
       onClick={handleToggleDropdown}
     >
       {content !== "0" && <p>{content}</p>}
-      {content === "0" && <Image alt="Troop" width={500} height={350} src="/spacetroop.png" />}
+      {content === "0" || (data?.url && <Image alt="Troop" width={500} height={350} src="/spacetroop.png" />)}
       {isOver && canDrop && (
         <div
           className="overlay"
