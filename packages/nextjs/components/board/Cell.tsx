@@ -25,16 +25,16 @@ export const Cell = ({ id, content, type, index, spaceETHContract, data, up, dow
   };
 
   const canMove = (item: any) => {
-    console.log(item, index, up, down, left, right);
-    if (index === 99) return true;
+    //console.log(item, index, up, down, left, right);
+    if (index >= 99) return true;
     if (item.up === id || item.down === id || item.left === id || item.right === id) return true;
     return false;
   };
 
   const handleDrop = async (item: any, index: number) => {
-    console.log(item, index);
-    if (item.index === 99) {
-      await spaceETHContract?.write.placeSpaceShip([BigInt(index)]);
+    //console.log(item, index);
+    if (item.index >= 99) {
+      await spaceETHContract?.write.placeSpaceShip([BigInt(index), item?.data?.id?.toString()]);
       notification.success("It was success");
     } else {
       await spaceETHContract?.write.movePlayer([item.id, index]);
@@ -44,7 +44,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, data, up, dow
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "CELL",
-    item: { id, index, type, content, up, down, left, right },
+    item: { id, index, type, content, data, up, down, left, right },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
@@ -74,7 +74,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, data, up, dow
       }}
       onClick={handleToggleDropdown}
     >
-      {content !== "0" && <p>{content}</p>}
+      <p>{content}</p>
       {content === "0" || (data?.url && <Image alt="Troop" width={500} height={350} src="/spacetroop.png" />)}
       {isOver && canDrop && (
         <div

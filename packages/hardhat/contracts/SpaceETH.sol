@@ -2,9 +2,11 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 import "./GemToken.sol";
+import "./TroopNFT.sol";
 
 contract SpaceETH {
     GemToken public gemToken;
+    TroopNFT public troopNFT;
 
     address public immutable owner;
     Box[] public grid;
@@ -31,9 +33,10 @@ contract SpaceETH {
         uint256 startdate;
     }
 
-    constructor(address _owner, address _tokenAddress) {
+    constructor(address _owner, address _tokenAddress, address _nftAddress) {
         owner = _owner;
         gemToken = GemToken(_tokenAddress);
+        troopNFT = TroopNFT(_nftAddress);
 
         grid.push(Box(0, 0, "base", "-", address(0), 999, 6, 999, 1));
         grid.push(Box(1, 1, "base", "-", address(0), 999, 7, 0, 2));
@@ -90,10 +93,11 @@ contract SpaceETH {
         return gemFields[index];
     }
 
-    function placeSpaceShip(uint256 index) public {
+    function placeSpaceShip(uint256 index, uint256 nftId) public {
         grid[index].content = "0";
 
         nums.push(index);
+        troopNFT.setTroopDeployed(msg.sender, nftId);
     }
 
     function movePlayer(uint256 oldIndex, uint256 newIndex) public {

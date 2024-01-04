@@ -57,7 +57,7 @@ contract TroopNFT is ERC721URIStorage {
     return nonDeployTroops;
   }
 
-  function setTroopDeployed(uint256 id) public {
-    userTroops[msg.sender][id].isDeployed = true;
+  function setTroopDeployed(address _owner, uint256 id) public {
+    userTroops[_owner][id].isDeployed = true;
   }
 }
