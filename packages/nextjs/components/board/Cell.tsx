@@ -37,7 +37,7 @@ export const Cell = ({ id, content, type, index, spaceETHContract, data, up, dow
       await spaceETHContract?.write.placeSpaceShip([BigInt(index), item?.data?.id?.toString()]);
       notification.success("It was success");
     } else {
-      await spaceETHContract?.write.movePlayer([item.id, index]);
+      await spaceETHContract?.write.movePlayer([item.id, BigInt(index), "0"]);
       notification.success("Moving Player");
     }
   };

@@ -100,11 +100,13 @@ contract SpaceETH {
         troopNFT.setTroopDeployed(msg.sender, nftId);
     }
 
-    function movePlayer(uint256 oldIndex, uint256 newIndex) public {
+    function movePlayer(uint256 oldIndex, uint256 newIndex, uint256 nftId) public {
         Box memory data1 = grid[oldIndex];
         Box memory data2 = grid[newIndex];
         grid[oldIndex].content = data2.content;
         grid[newIndex].content = data1.content;
+        
+        troopNFT.usedOxygen(msg.sender, nftId);
     }
 
     function capture(uint256 id) public {

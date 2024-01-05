@@ -58,7 +58,7 @@ const Board: NextPage = () => {
                   <Cell
                     key={index}
                     id="99"
-                    content="0"
+                    content="T"
                     type=""
                     index={99 + index}
                     data={n}
