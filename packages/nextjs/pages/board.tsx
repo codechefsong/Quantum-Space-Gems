@@ -52,12 +52,13 @@ const Board: NextPage = () => {
                     />
                   ))}
               </div>
+              <h2 className="mt-4 text-3xl">Your Troops</h2>
               <div className="flex mt-[10px]">
                 {nfts?.map((n, index) => (
                   <Cell
                     key={index}
                     id="99"
-                    content="Your Ship"
+                    content="0"
                     type=""
                     index={99 + index}
                     data={n}
