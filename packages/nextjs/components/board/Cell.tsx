@@ -7,6 +7,7 @@ import { notification } from "~~/utils/scaffold-eth";
 type CellInfo = {
   id: string;
   content: string;
+  nftId: string;
   type: string;
   index: number;
   spaceETHContract: any;
@@ -17,7 +18,7 @@ type CellInfo = {
   right: string;
 };
 
-export const Cell = ({ id, content, type, index, spaceETHContract, data, up, down, left, right }: CellInfo) => {
+export const Cell = ({ id, content, nftId, type, index, spaceETHContract, data, up, down, left, right }: CellInfo) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleToggleDropdown = () => {
@@ -32,19 +33,19 @@ export const Cell = ({ id, content, type, index, spaceETHContract, data, up, dow
   };
 
   const handleDrop = async (item: any, index: number) => {
-    //console.log(item, index);
+    console.log(item, index);
     if (item.index >= 99) {
       await spaceETHContract?.write.placeSpaceShip([BigInt(index), item?.data?.id?.toString()]);
       notification.success("It was success");
     } else {
-      await spaceETHContract?.write.movePlayer([item.id, BigInt(index), "0"]);
+      await spaceETHContract?.write.movePlayer([item.id, BigInt(index), item.nftId]);
       notification.success("Moving Player");
     }
   };
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "CELL",
-    item: { id, index, type, content, data, up, down, left, right },
+    item: { id, index, type, content, nftId, data, up, down, left, right },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),

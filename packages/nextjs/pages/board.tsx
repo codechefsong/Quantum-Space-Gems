@@ -41,6 +41,7 @@ const Board: NextPage = () => {
                       key={item.id.toString()}
                       id={item.id.toString()}
                       content={item.content.toString()}
+                      nftId={item.nftId.toString()}
                       type={item.typeGrid}
                       index={index}
                       data={null}
@@ -59,6 +60,7 @@ const Board: NextPage = () => {
                     key={index}
                     id="99"
                     content="T"
+                    nftId={n.id.toString()}
                     type=""
                     index={99 + index}
                     data={n}
