@@ -40,7 +40,7 @@ const Marketplace: NextPage = () => {
               onClick={() => setSelectNFT(index)}
             >
               <Image alt="Troop" width={100} height={100} src={n.url} />
-              <p className="m-0">Ox {n.oxygenAmount.toString()}</p>
+              <p className="m-0">Ox {n?.oxygenAmount?.toString()}</p>
             </div>
           ))}
         </div>

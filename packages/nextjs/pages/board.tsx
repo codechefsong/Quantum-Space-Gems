@@ -33,7 +33,7 @@ const Board: NextPage = () => {
         <DndProvider backend={HTML5Backend}>
           <div className="flex">
             <div>
-              <h2 className="mt-4 text-3xl">Ground</h2>
+              <h2 className="mt-4 text-3xl">Planet Ox</h2>
               <div className="flex flex-wrap" style={{ width: "400px" }}>
                 {gridData &&
                   gridData.map((item, index) => (
@@ -41,7 +41,7 @@ const Board: NextPage = () => {
                       key={item.id.toString()}
                       id={item.id.toString()}
                       content={item.content.toString()}
-                      nftId={item.nftId.toString()}
+                      nftId={item?.nftId?.toString()}
                       type={item.typeGrid}
                       index={index}
                       data={null}

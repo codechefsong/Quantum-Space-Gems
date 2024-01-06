@@ -70,13 +70,14 @@ export const Cell = ({ id, content, nftId, type, index, spaceETHContract, data, 
       className="w-16 h-16 border border-gray-300 flex items-center justify-center font-bold relative"
       style={{
         opacity: isDragging ? 0.5 : 1,
-        background: index === 1 ? "green" : "white",
+        background: index === 1 || index === 16 || index === 26 ? "green" : "gray",
         cursor: "move",
       }}
       onClick={handleToggleDropdown}
     >
       {content !== "0" && index !== 1 && <p>{content}</p>}
       {content === "0" && <Image alt="Troop" width={500} height={350} src="/spacetroop.png" />}
+      {(index === 1 || index === 16 || index === 26) && <Image alt="Mine" width={500} height={350} src="/mine.png" />}
       {isOver && canDrop && (
         <div
           className="overlay"
