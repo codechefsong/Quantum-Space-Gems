@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Cell } from "../components/board/Cell";
 import type { NextPage } from "next";
 import { DndProvider } from "react-dnd";
@@ -20,7 +21,13 @@ const Board: NextPage = () => {
     functionName: "getGrid",
   });
 
-  const { data: nfts } = useScaffoldContractRead({
+  const { data: mynfts } = useScaffoldContractRead({
+    contractName: "TroopNFT",
+    functionName: "getMyNFTs",
+    args: [address],
+  });
+
+  const { data: deploynfts } = useScaffoldContractRead({
     contractName: "TroopNFT",
     functionName: "getNonDeployTroops",
     args: [address],
@@ -31,7 +38,7 @@ const Board: NextPage = () => {
       <MetaHeader />
       <div className="flex flex-col items-center">
         <DndProvider backend={HTML5Backend}>
-          <div className="flex">
+          <div className="grid lg:grid-cols-2 flex-grow gap-[30px]">
             <div>
               <h2 className="mt-4 text-3xl">Planet Ox</h2>
               <div className="flex flex-wrap" style={{ width: "400px" }}>
@@ -53,9 +60,9 @@ const Board: NextPage = () => {
                     />
                   ))}
               </div>
-              <h2 className="mt-4 text-3xl">Your Troops</h2>
+              <h2 className="mt-4 text-3xl">Deploy</h2>
               <div className="flex mt-[10px]">
-                {nfts?.map((n, index) => (
+                {deploynfts?.map((n, index) => (
                   <Cell
                     key={index}
                     id="99"
@@ -70,6 +77,22 @@ const Board: NextPage = () => {
                     left="0"
                     right="0"
                   />
+                ))}
+              </div>
+            </div>
+            <div>
+              <h2 className="mt-4 text-3xl">Your Troops</h2>
+              <div className="flex flex-col">
+                {mynfts?.map((n, index) => (
+                  <div key={index} className="flex border border-gray-30 font-bold bg-white mb-2">
+                    <div className="bg-gray-500">
+                      <Image alt="Troop" width={70} height={70} src={n.url} />
+                    </div>
+                    <div className="p-2">
+                      <p className="m-0">ID: {n?.id?.toString()}</p>
+                      <p className="m-0">Oxygen Amount: {n?.oxygenAmount?.toString()}</p>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
