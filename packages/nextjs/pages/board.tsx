@@ -67,7 +67,7 @@ const Board: NextPage = () => {
                     key={index}
                     id="99"
                     content="T"
-                    nftId={n.id.toString()}
+                    nftId={n.nftId.toString()}
                     type=""
                     index={99 + index}
                     data={n}

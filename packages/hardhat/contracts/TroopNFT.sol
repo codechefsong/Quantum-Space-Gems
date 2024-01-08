@@ -12,10 +12,12 @@ contract TroopNFT is ERC721URIStorage {
 
   constructor() ERC721("Troop NFT", "TRP") {}
 
-  mapping(address => Troop[]) public userTroops;
+  Troop[] public troops;
+  mapping(address => uint256[]) public userTroops;
 
   struct Troop {
     uint256 id;
+    uint256 nftId;
     uint256 oxygenAmount;
     string url;
     bool isDeployed;
@@ -26,14 +28,22 @@ contract TroopNFT is ERC721URIStorage {
     _mint(_to, newItemId);
     _setTokenURI(newItemId, _tokenURI_);
     mynfts[_to].push(newItemId);
-    userTroops[_to].push(Troop(newItemId, 100, "/spacetroop.png", false));
+    troops.push(Troop(newItemId, newItemId, 100, "/spacetroop.png", false));
+    userTroops[_to].push(newItemId);
 
     _tokenIds.increment();
     return newItemId;
   }
 
   function getMyNFTs(address _owner) public view returns (Troop[] memory){
-    return userTroops[_owner];
+    Troop[] memory newTroops = new Troop[](userTroops[_owner].length);
+
+    for (uint i = 0; i < userTroops[_owner].length; i++) {
+      Troop memory newTroop = troops[userTroops[_owner][i]];
+      newTroops[i] = newTroop;
+    }
+
+    return newTroops;
   }
 
   function getNonDeployTroops(address _owner) public view returns (Troop[] memory){
@@ -41,7 +51,7 @@ contract TroopNFT is ERC721URIStorage {
     uint troopsId = 0;
    
     for (uint i = 0; i < userTroops[_owner].length; i++) {
-      if (userTroops[_owner][i].isDeployed == false) {
+      if (troops[userTroops[_owner][i]].isDeployed == false) {
         troopsCount += 1;
       }
     }
@@ -49,20 +59,20 @@ contract TroopNFT is ERC721URIStorage {
     Troop[] memory nonDeployTroops = new Troop[](troopsCount);
 
     for (uint i = 0; i < userTroops[_owner].length; i++) {
-      if (userTroops[_owner][i].isDeployed == false) {
-        nonDeployTroops[troopsId] = userTroops[_owner][i];
+      if (troops[userTroops[_owner][i]].isDeployed == false) {
+        Troop memory newTroop = troops[userTroops[_owner][i]];
+        nonDeployTroops[troopsId] = newTroop;
       }
     }
 
     return nonDeployTroops;
   }
 
-  function setTroopDeployed(address _owner, uint256 id) public {
-    userTroops[_owner][id].isDeployed = true;
+  function setTroopDeployed(uint256 id) public {
+    troops[id].isDeployed = true;
   }
 
   function usedOxygen(uint256 id, uint256 amount) public {
-    address owner = ownerOf(id);
-    userTroops[owner][id].oxygenAmount -= amount;
+    troops[id].oxygenAmount -= amount;
   }
 }
