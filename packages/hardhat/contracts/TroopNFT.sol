@@ -26,7 +26,7 @@ contract TroopNFT is ERC721URIStorage {
     _mint(_to, newItemId);
     _setTokenURI(newItemId, _tokenURI_);
     mynfts[_to].push(newItemId);
-    userTroops[msg.sender].push(Troop(newItemId, 100, "/spacetroop.png", false));
+    userTroops[_to].push(Troop(newItemId, 100, "/spacetroop.png", false));
 
     _tokenIds.increment();
     return newItemId;
@@ -61,7 +61,8 @@ contract TroopNFT is ERC721URIStorage {
     userTroops[_owner][id].isDeployed = true;
   }
 
-  function usedOxygen(address _owner, uint256 id) public {
-    userTroops[_owner][id].oxygenAmount -= 1;
+  function usedOxygen(uint256 id, uint256 amount) public {
+    address owner = ownerOf(id);
+    userTroops[owner][id].oxygenAmount -= amount;
   }
 }

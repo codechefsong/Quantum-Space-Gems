@@ -109,12 +109,15 @@ contract SpaceETH {
         grid[newIndex].content = data1.content;
         grid[newIndex].nftId = data1.nftId;
 
-        troopNFT.usedOxygen(msg.sender, nftId);
+        troopNFT.usedOxygen(nftId, 1);
     }
 
     function capture(uint256 id) public {
         GemField storage gem = gemFields[id];
         gem.hp -= 3;
+
+        Box memory currentBox = grid[id];
+        troopNFT.usedOxygen(currentBox.nftId, 3);
 
         if (gem.hp == 0) {
             gem.owner = msg.sender;
@@ -123,7 +126,6 @@ contract SpaceETH {
         }
     }
 
-
     function mineGem(uint256 id) public {
         GemField storage gem = gemFields[id];
         require(gem.owner == msg.sender, "You do not own this gem fields");
@@ -131,6 +133,9 @@ contract SpaceETH {
         uint256 amount = block.timestamp - gem.startdate;
         gemToken.mint(msg.sender, 1 * amount);
         gem.startdate = block.timestamp;
+
+        Box memory currentBox = grid[id];
+        troopNFT.usedOxygen(currentBox.nftId, 3);
     }
 
     function withdraw() isOwner public {
