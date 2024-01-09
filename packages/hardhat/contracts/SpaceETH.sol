@@ -135,7 +135,7 @@ contract SpaceETH {
         gem.startdate = block.timestamp;
 
         Box memory currentBox = grid[id];
-        troopNFT.usedOxygen(currentBox.nftId, 3);
+        troopNFT.usedOxygen(currentBox.nftId, 10);
     }
 
     function withdraw() isOwner public {

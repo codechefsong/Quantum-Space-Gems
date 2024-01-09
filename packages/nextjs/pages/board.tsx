@@ -33,6 +33,12 @@ const Board: NextPage = () => {
     args: [address],
   });
 
+  const { data: tokenAmount } = useScaffoldContractRead({
+    contractName: "GemToken",
+    functionName: "balanceOf",
+    args: [address],
+  });
+
   return (
     <>
       <MetaHeader />
@@ -67,7 +73,7 @@ const Board: NextPage = () => {
                     key={index}
                     id="99"
                     content="T"
-                    nftId={n.nftId.toString()}
+                    nftId={n?.nftId?.toString()}
                     type=""
                     index={99 + index}
                     data={n}
@@ -95,6 +101,7 @@ const Board: NextPage = () => {
                   </div>
                 ))}
               </div>
+              <p className="text-2xl">{tokenAmount?.toString()} Gems</p>
             </div>
           </div>
         </DndProvider>
