@@ -33,7 +33,7 @@ export const Cell = ({ id, content, nftId, type, index, spaceETHContract, data, 
   };
 
   const handleDrop = async (item: any, index: number) => {
-    console.log(item, index);
+    console.log(item, index, item?.data?.id?.toString(), "placer");
     if (item.index >= 99) {
       await spaceETHContract?.write.placeSpaceShip([BigInt(index), item?.data?.id?.toString()]);
       notification.success("It was success");
@@ -75,6 +75,7 @@ export const Cell = ({ id, content, nftId, type, index, spaceETHContract, data, 
       }}
       onClick={handleToggleDropdown}
     >
+      {content === "0" && <p className="absolute z-10 mt-10 text-xl">{nftId}</p>}
       {content !== "0" && index !== 1 && <p>{content}</p>}
       {content === "0" && <Image alt="Troop" width={500} height={350} src="/spacetroop.png" />}
       {(index === 1 || index === 16 || index === 26) && <Image alt="Mine" width={500} height={350} src="/mine.png" />}

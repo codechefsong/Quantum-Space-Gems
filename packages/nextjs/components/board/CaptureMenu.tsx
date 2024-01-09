@@ -39,7 +39,7 @@ const CaptureMenu = ({ index, isOpen, onClose }: MenuInfo) => {
     <>
       <div className="relative">
         {isOpen && (
-          <div className="absolute z-10 -mt-7 ml-6 bg-white rounded shadow-md">
+          <div className="absolute z-10 -mt-7 ml-1 bg-white rounded shadow-md">
             <ul>
               {gemFields?.owner !== address && (
                 <li className="px-4 py-3 cursor-pointer hover:bg-gray-100" onClick={() => capture()}>
