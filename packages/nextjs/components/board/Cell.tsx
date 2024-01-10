@@ -33,12 +33,12 @@ export const Cell = ({ id, content, nftId, type, index, spaceETHContract, data, 
   };
 
   const handleDrop = async (item: any, index: number) => {
-    console.log(item, index, item?.data?.id?.toString(), "placer");
+    console.log(item, index);
     if (item.index >= 99) {
       await spaceETHContract?.write.placeSpaceShip([BigInt(index), item?.data?.id?.toString()]);
       notification.success("It was success");
     } else {
-      await spaceETHContract?.write.movePlayer([item.id, BigInt(index), item.nftId]);
+      await spaceETHContract?.write.movePlayer([item.id, BigInt(index)]);
       notification.success("Moving Player");
     }
   };
