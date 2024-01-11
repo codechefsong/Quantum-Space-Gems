@@ -92,10 +92,11 @@ const Board: NextPage = () => {
                 {mynfts?.map((n, index) => (
                   <div key={index} className="flex border border-gray-30 font-bold bg-white mb-2">
                     <div className="bg-gray-500">
-                      <Image alt="Troop" width={70} height={70} src={n.url} />
+                      <Image className="mt-3" alt="Troop" width={70} height={70} src={n.url} />
                     </div>
                     <div className="p-2">
                       <p className="m-0">ID: {n?.id?.toString()}</p>
+                      <p className="m-0">Heath Points: {n?.hp?.toString()}</p>
                       <p className="m-0">Oxygen Amount: {n?.oxygenAmount?.toString()}</p>
                     </div>
                   </div>

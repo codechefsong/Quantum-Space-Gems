@@ -18,6 +18,7 @@ contract TroopNFT is ERC721URIStorage {
   struct Troop {
     uint256 id;
     uint256 nftId;
+    uint256 hp;
     uint256 oxygenAmount;
     string url;
     bool isDeployed;
@@ -28,7 +29,7 @@ contract TroopNFT is ERC721URIStorage {
     _mint(_to, newItemId);
     _setTokenURI(newItemId, _tokenURI_);
     mynfts[_to].push(newItemId);
-    troops.push(Troop(newItemId, newItemId, 30, "/spacetroop.png", false));
+    troops.push(Troop(newItemId, newItemId, 3, 30, "/spacetroop.png", false));
     userTroops[_to].push(newItemId);
 
     _tokenIds.increment();
