@@ -112,6 +112,14 @@ contract SpaceETH {
         troopNFT.usedOxygen(data1.nftId, 1);
     }
 
+    function attackTroop(uint256 attackerIndex, uint256 defenderIndex) public {
+        Box memory attacker = grid[attackerIndex];
+        Box memory defender = grid[defenderIndex];
+
+        troopNFT.usedOxygen(attacker.nftId, 5);
+        troopNFT.loseHP(defender.nftId);
+    }
+
     function capture(uint256 id) public {
         GemField storage gem = gemFields[id];
         gem.hp -= 3;
