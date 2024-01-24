@@ -63,6 +63,7 @@ const Board: NextPage = () => {
                       down={item.down.toString()}
                       left={item.left.toString()}
                       right={item.right.toString()}
+                      gridData={gridData}
                     />
                   ))}
               </div>
@@ -82,6 +83,7 @@ const Board: NextPage = () => {
                     down="0"
                     left="0"
                     right="0"
+                    gridData={gridData}
                   />
                 ))}
               </div>

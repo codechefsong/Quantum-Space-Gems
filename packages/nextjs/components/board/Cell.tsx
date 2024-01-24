@@ -16,9 +16,23 @@ type CellInfo = {
   down: string;
   left: string;
   right: string;
+  gridData: any;
 };
 
-export const Cell = ({ id, content, nftId, type, index, spaceETHContract, data, up, down, left, right }: CellInfo) => {
+export const Cell = ({
+  id,
+  content,
+  nftId,
+  type,
+  index,
+  spaceETHContract,
+  data,
+  up,
+  down,
+  left,
+  right,
+  gridData,
+}: CellInfo) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleToggleDropdown = () => {
@@ -32,11 +46,14 @@ export const Cell = ({ id, content, nftId, type, index, spaceETHContract, data, 
     return false;
   };
 
-  const handleDrop = async (item: any, index: number) => {
+  const handleDrop = async (item: any, index: number, gridData: any) => {
     console.log(item, index);
+
     if (item.index >= 99) {
       await spaceETHContract?.write.placeSpaceShip([BigInt(index), item?.data?.id?.toString()]);
       notification.success("It was success");
+    } else if (gridData[index].content === "0") {
+      await spaceETHContract?.write.attackTroop([item?.nftId, index]);
     } else {
       await spaceETHContract?.write.movePlayer([item.id, BigInt(index)]);
       notification.success("Moving Player");
@@ -53,7 +70,7 @@ export const Cell = ({ id, content, nftId, type, index, spaceETHContract, data, 
 
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: "CELL",
-    drop: item => handleDrop(item, index),
+    drop: item => handleDrop(item, index, gridData),
     canDrop: item => canMove(item),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
