@@ -83,6 +83,10 @@ contract TroopNFT is ERC721URIStorage {
     }
   }
 
+  function getOxygen(uint256 id, uint256 amount) public {
+    troops[id].oxygenAmount += amount;
+  }
+
   function loseHP(uint256 id) public {
     troops[id].hp -= 1;
     if ( troops[id].hp == 0) {

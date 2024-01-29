@@ -145,6 +145,12 @@ contract SpaceETH {
         troopNFT.usedOxygen(currentBox.nftId, 10);
     }
 
+    function exchangeForOxygen(uint256 id) public {
+        Box memory currentBox = grid[id];
+        troopNFT.getOxygen(currentBox.nftId, 20);
+        gemToken.burn(msg.sender, 30);
+    }
+
     function withdraw() isOwner public {
         (bool success,) = owner.call{value: address(this).balance}("");
         require(success, "Failed to send Ether");
