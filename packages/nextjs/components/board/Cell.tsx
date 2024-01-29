@@ -96,6 +96,7 @@ export const Cell = ({
       {content !== "0" && index !== 1 && <p>{content}</p>}
       {content === "0" && <Image alt="Troop" width={500} height={350} src="/spacetroop.png" />}
       {(index === 1 || index === 16 || index === 26) && <Image alt="Mine" width={500} height={350} src="/mine.png" />}
+      {index === 14 && <Image alt="Shop" width={50} height={50} src="/spaceshop.png" />}
       {isOver && canDrop && (
         <div
           className="overlay"
