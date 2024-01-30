@@ -10,7 +10,6 @@ contract SpaceETH {
 
     address public immutable owner;
     Box[] public grid;
-    uint256[] public nums;
     mapping(uint256 => GemField) public gemFields;
 
     struct Box {
@@ -85,10 +84,6 @@ contract SpaceETH {
         return grid;
     }
 
-    function getNums() public view returns (uint256[] memory){
-        return nums;
-    }
-
     function getGemFieldByID(uint256 index) public view returns (GemField memory){
         return gemFields[index];
     }
@@ -97,7 +92,6 @@ contract SpaceETH {
         grid[index].content = "0";
         grid[index].nftId = nftId;
 
-        nums.push(index);
         troopNFT.setTroopDeployed(nftId);
     }
 
@@ -149,6 +143,13 @@ contract SpaceETH {
         Box memory currentBox = grid[id];
         troopNFT.getOxygen(currentBox.nftId, 20);
         gemToken.burn(msg.sender, 30);
+    }
+
+    function removeTroop(uint256 index, uint256 nftId) public {
+        grid[index].content = "0";
+        grid[index].nftId = nftId;
+
+        troopNFT.setTroopDeployed(nftId);
     }
 
     function withdraw() isOwner public {
