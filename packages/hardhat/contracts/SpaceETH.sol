@@ -110,7 +110,8 @@ contract SpaceETH {
         Box memory defender = grid[defenderIndex];
 
         troopNFT.usedOxygen(nftId, 5);
-        troopNFT.loseHP(defender.nftId);
+        bool isKO = troopNFT.loseHP(defender.nftId);
+        if (isKO) removeTroop(defenderIndex);
     }
 
     function capture(uint256 id) public {
@@ -145,11 +146,9 @@ contract SpaceETH {
         gemToken.burn(msg.sender, 30);
     }
 
-    function removeTroop(uint256 index, uint256 nftId) public {
-        grid[index].content = "0";
-        grid[index].nftId = nftId;
-
-        troopNFT.setTroopDeployed(nftId);
+    function removeTroop(uint256 index) internal {
+        grid[index].content = "-";
+        grid[index].nftId = 0;
     }
 
     function withdraw() isOwner public {
