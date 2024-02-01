@@ -5,6 +5,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useAccount, useWalletClient } from "wagmi";
 import { MetaHeader } from "~~/components/MetaHeader";
+import { DeployTroopCell } from "~~/components/board/DeployTroopCell";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { useScaffoldContract } from "~~/hooks/scaffold-eth";
 
@@ -70,7 +71,7 @@ const Board: NextPage = () => {
               <h2 className="mt-4 text-3xl">Deploy</h2>
               <div className="flex mt-[10px]">
                 {deploynfts?.map((n, index) => (
-                  <Cell
+                  <DeployTroopCell
                     key={index}
                     id="99"
                     content="T"
