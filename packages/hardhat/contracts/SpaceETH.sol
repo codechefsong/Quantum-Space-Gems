@@ -103,7 +103,8 @@ contract SpaceETH {
         grid[newIndex].content = data1.content;
         grid[newIndex].nftId = data1.nftId;
 
-        troopNFT.usedOxygen(data1.nftId, 1);
+        bool isKO = troopNFT.usedOxygen(data1.nftId, 10);
+        if (isKO) removeTroop(newIndex);
     }
 
     function attackTroop(uint256 nftId, uint256 defenderIndex) public {
